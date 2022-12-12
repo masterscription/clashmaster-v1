@@ -211,7 +211,9 @@ proxy-groups:
   type: select
   disable-udp: false
   proxies:
-  - CLASHMASTER-V1
+  - MASTER-LOADBALANCE
+  - MASTER-WAN1
+  - MASTER-WAN2
   - DIRECT
   url: http://www.gstatic.com/generate_204
   interval: '99'
@@ -220,7 +222,9 @@ proxy-groups:
   type: select
   disable-udp: false
   proxies:
-  - CLASHMASTER-V1
+  - MASTER-LOADBALANCE
+  - MASTER-WAN1
+  - MASTER-WAN2
   - DIRECT
   url: http://www.gstatic.com/generate_204
   interval: '99'
@@ -229,7 +233,9 @@ proxy-groups:
   type: select
   disable-udp: false
   proxies:
-  - CLASHMASTER-V1
+  - MASTER-LOADBALANCE
+  - MASTER-WAN1
+  - MASTER-WAN2
   - DIRECT
   url: http://www.gstatic.com/generate_204
   interval: '99'
@@ -238,7 +244,9 @@ proxy-groups:
   type: select
   disable-udp: false
   proxies:
-  - CLASHMASTER-V1
+  - MASTER-LOADBALANCE
+  - MASTER-WAN1
+  - MASTER-WAN2
   - DIRECT
   url: http://www.gstatic.com/generate_204
   interval: '99'
@@ -247,7 +255,9 @@ proxy-groups:
   type: select
   disable-udp: false
   proxies:
-  - CLASHMASTER-V1
+  - MASTER-LOADBALANCE
+  - MASTER-WAN1
+  - MASTER-WAN2
   - DIRECT
   url: http://www.gstatic.com/generate_204
   interval: '99'
@@ -256,7 +266,9 @@ proxy-groups:
   type: select
   disable-udp: false
   proxies:
-  - CLASHMASTER-V1
+  - MASTER-LOADBALANCE
+  - MASTER-WAN1
+  - MASTER-WAN2
   - DIRECT
   url: http://www.gstatic.com/generate_204
   interval: '99'
@@ -339,21 +351,14 @@ rules:
 tun:
   enable: true
   stack: system
-  device: utun
-  auto-route: false
-  auto-detect-interface: false
   dns-hijack:
-  - tcp://any:53
+  - tcp://8.8.8.8:53
+  - 8.8.8.8:1053
+  auto-redir: true
+  auto-route: true
+  auto-detect-interface: true
 profile:
   store-selected: true
   store-fake-ip: true
-secret: mwnsofficial
+secret: '123456'
 bind-address: "*"
-geodata-mode: false
-geodata-loader: memconservative
-tcp-concurrent: true
-sniffer:
-  enable: true
-  sniffing:
-  - tls
-  - http
