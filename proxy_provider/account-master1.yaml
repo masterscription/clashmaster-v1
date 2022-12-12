@@ -1,0 +1,9 @@
+proxies:
+- name: nama-akunmu1
+  server: id1-clashmwns.com
+  type: trojan
+  port: 443
+  password: xxxx-xxxx-xxxx-xxxxxxxxxxx
+  udp: true
+  sni: bugmu.com
+  skip-cert-verify: true
