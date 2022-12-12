@@ -264,27 +264,27 @@ proxy-groups:
 rule-providers:
   Master-Game:
     type: file
-    behavior: classical
+    behavior: domain
     path: "./rule_provider/master-game.yaml"
   Master-Sosmed:
     type: file
-    behavior: classical
+    behavior: domain
     path: "./rule_provider/master-sosmed.yaml"
   Master-Stream:
     type: file
-    behavior: classical
+    behavior: domain
     path: "./rule_provider/master-stream.yaml"
   Master-Olshop:
     type: file
-    behavior: classical
+    behavior: domain
     path: "./rule_provider/master-olshop.yaml"
   Master-Bank:
     type: file
-    behavior: classical
+    behavior: domain
     path: "./rule_provider/master-bank.yaml"
   Master-Whatsapp:
     type: file
-    behavior: classical
+    behavior: domain
     path: "./rule_provider/master-whatsapp.yaml"
 rules:
 - IP-CIDR,198.18.0.1/16,REJECT,no-resolve
