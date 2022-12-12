@@ -5,7 +5,7 @@ redir-port: 7892
 tproxy-port: 7895
 mixed-port: 7893
 allow-lan: true
-mode: rule
+mode: script
 log-level: info
 ipv6: false
 external-controller: 0.0.0.0:9090
@@ -286,6 +286,46 @@ rule-providers:
     type: file
     behavior: domain
     path: "./rule_provider/master-whatsapp.yaml"
+script:
+  code: |
+    def main(ctx, metadata):
+        ruleset_action = {"Master-Game": "GAME🎮-MASTER",
+            "Master-Sosmed": "SOSMED📱-MASTER",
+            "Master-Stream": "STREAM📺-MASTER",
+            "Master-Olshop": "OLSHOP📦-MASTER",
+            "Master-Bank": "BANK💰-MASTER",
+            "Master-Whatsapp": "WHATSAPP⌨-MASTER"
+          }
+
+        port = int(metadata["dst_port"])
+
+        if metadata["network"] == "UDP":
+            if port == [21,22,23,53,80,123,143,194,443,465,587,853,993,995,998,2052,2053,2082,2083,2086,2095,2096,5222,5228,5229,5230,8080,8443,8880,8888,8889]:
+                ctx.log('[Script] matched QUIC traffic use CLASHMASTER-V1')
+                return "CLASHMASTER-V1"
+
+        port_list = [21, 22, 23, 53, 80, 123, 143, 194, 443, 465, 587, 853, 993, 995, 998, 2052, 2053, 2082, 2083, 2086, 2095, 2096, 5222, 5228, 5229, 5230, 8080, 8443, 8880, 8888, 8889]
+        if port not in port_list:
+            ctx.log('[Script] not common port use GAME🎮-MASTER')
+            return "GAME🎮-MASTER"
+
+        if metadata["dst_ip"] == "":
+            metadata["dst_ip"] = ctx.resolve_ip(metadata["host"])
+
+        for ruleset in ruleset_action:
+            if ctx.rule_providers[ruleset].match(metadata):
+                return ruleset_action[ruleset]
+
+        if metadata["dst_ip"] == "":
+            return "DIRECT"
+
+        code = ctx.geoip(metadata["dst_ip"])
+        if code == "ID":
+            ctx.log('[Script] Geoip ID')
+            return "CLASHMASTER-V1"
+
+        ctx.log('[Script] CLASHMASTER-V1')
+        return "CLASHMASTER-V1"
 rules:
 - IP-CIDR,198.18.0.1/16,REJECT,no-resolve
 - RULE-SET,Master-Game,GAME🎮-MASTER
